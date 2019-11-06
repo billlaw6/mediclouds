@@ -1,17 +1,20 @@
+import { AppContainer } from 'react-hot-loader';
+import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { Provider } from 'react-redux';
-import configuration from './store';
 import App from './App';
+import configureStore, { history } from './configureStore'
 import * as serviceWorker from './serviceWorker';
 
-const store = configuration();
+const store = configureStore();
 const Root = () => (
-    <Provider store={store}>
-        <App />
-    </Provider>
-)
+    <AppContainer>
+        <Provider store={store}>
+            <App history={history} />
+        </Provider>
+    </AppContainer>
+);
 
 ReactDOM.render(<Root />, document.getElementById('root'));
 

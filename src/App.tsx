@@ -1,41 +1,19 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { AppState } from './store';
-import { addCount } from './store/actions';
-import './App.css';
+import React from 'react'
+import { History } from 'history'
+import { ConnectedRouter } from 'connected-react-router'
+import routes from './routes'
 
-// 定义本Component创建时需要的参数类型
-interface IAppProps {
-    count: number;
-    addCount: typeof addCount;
+interface AppProps {
+  history: History;
 }
 
-class App extends React.Component<IAppProps, {}> {
-    render() {
-        const { count } = this.props;
-        return (
-            <div className="App">
-                <span>{count}</span>
-                <button onClick={this.handleClick}>+</button>
-            </div>
-        );
-    }
-
-    private handleClick = () => {
-        this.props.addCount();
-    };
+const App = ({ history }: AppProps) => {
+  return (
+    <ConnectedRouter history={history}>
+      { routes }
+    </ConnectedRouter>
+  )
 }
 
-// 从state里摘出本Component需要的部分作为本Component构建的参数
-// state初始值在reducers里定义了
-const mapStateToProps = (state: AppState) => ({
-    count: state.count,
-});
+export default App
 
-// 向Component传入参数并构建对象
-export default connect(
-    mapStateToProps,
-    {
-        addCount,
-    },
-)(App);
